@@ -37,7 +37,8 @@ namespace visp_auto_tracker{
 
     tracking::Tracker* t_;
     CmdLine cmd_;
-
+    struct timespec fps_start, fps_stop;
+    double start, stop;
     void waitForImage();
 
     void frameCallback(const sensor_msgs::ImageConstPtr& image, const sensor_msgs::CameraInfoConstPtr& cam_info);
