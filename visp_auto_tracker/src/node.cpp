@@ -107,7 +107,7 @@ namespace visp_auto_tracker{
   //records last recieved image
   void Node::frameCallback(const sensor_msgs::ImageConstPtr& image, const sensor_msgs::CameraInfoConstPtr& cam_info){
     boost::mutex::scoped_lock(lock_);
-    clock_gettime(CLOCK_MONOTONIC, &interval_start); start=(double)interval_start.tv_sec + ((double)fps_start.tv_nsec/1000000000.0);
+    clock_gettime(CLOCK_MONOTONIC, &fps_start); start=(double)fps_start.tv_sec + ((double)fps_start.tv_nsec/1000000000.0);
 
     image_header_ = image->header;
     I_ = visp_bridge::toVispImageRGBa(*image); //make sure the image isn't worked on by locking a mutex
@@ -304,7 +304,7 @@ namespace visp_auto_tracker{
         code_message_publisher.publish(message);
         ROS_INFO_STREAM("Code with message \"" <<  message.data << "\" under tracking");
       }      
-      clock_gettime(CLOCK_MONOTONIC, &interval_stop); stop=(double)interval_stop.tv_sec + ((double)fps_stop.tv_nsec/1000000000.0);
+      clock_gettime(CLOCK_MONOTONIC, &fps_stop); stop=(double)fps_stop.tv_sec + ((double)fps_stop.tv_nsec/1000000000.0);
 
       ros::spinOnce();
       rate.sleep();
